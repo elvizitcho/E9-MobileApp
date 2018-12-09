@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Dashboard"
+    android:orientation="vertical"
+    android:background="@color/bg_dark"
+    >
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:alignmentMode="alignMargins"
+        android:columnOrderPreserved="false"
+        android:padding="1dp"
+        >
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="12dp"
+            app:cardElevation="8dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/firebas_orange"
+                android:layout_marginBottom="32dp"
+                >
+
+                <pl.pawelkleczkowski.customgauge.CustomGauge
+                    android:id="@+id/gauge1"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    app:gaugeStartAngle="120"
+                    app:gaugeSweepAngle="300"
+                    app:gaugeStrokeCap="BUTT"
+                    app:gaugeStrokeColor="#80FFFFFF"
+                    app:gaugeStrokeWidth="10dp"
+                    app:gaugePointEndColor="#FFF"
+                    app:gaugePointStartColor="#FFF"
+                    app:gaugeStartValue="0"
+                    app:gaugeEndValue="100"
+                    />
+
+                <TextView
+
+                    android:id="@+id/text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFF"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingTop="100dp"
+                    android:text="@string/med_1"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFF"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/peso"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:textColor="#00FFFFFF"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/card_orange"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:text="@string/card_1"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    />
+
+            </LinearLayout>
+
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="24dp"
+            app:cardElevation="8dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/firebase_blue"
+                android:layout_marginBottom="32dp"
+                >
+
+                <pl.pawelkleczkowski.customgauge.CustomGauge
+                    android:id="@+id/gauge2"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    app:gaugeEndValue="100"
+                    app:gaugePointEndColor="#FFF"
+                    app:gaugePointStartColor="#FFF"
+                    app:gaugeStartAngle="120"
+                    app:gaugeStartValue="0"
+                    app:gaugeStrokeCap="BUTT"
+                    app:gaugeStrokeColor="#80FFFFFF"
+                    app:gaugeStrokeWidth="10dp"
+                    app:gaugeSweepAngle="300"
+                    />
+
+                <TextView
+                    android:id="@+id/text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFF"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingTop="100dp"
+                    android:text="@string/med_2"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFF"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/peso"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:textColor="#00FFFFFF"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimaryDark"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:text="@string/card_2"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    />
+
+            </LinearLayout>
+
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="36dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="12dp"
+            app:cardElevation="8dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/firebase_blue"
+                android:layout_marginBottom="32dp"
+                >
+
+                <pl.pawelkleczkowski.customgauge.CustomGauge
+                    android:id="@+id/gauge3"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    app:gaugeEndValue="100"
+                    app:gaugePointEndColor="#FFF"
+                    app:gaugePointStartColor="#FFF"
+                    app:gaugeStartAngle="120"
+                    app:gaugeStartValue="0"
+                    app:gaugeStrokeCap="BUTT"
+                    app:gaugeStrokeColor="#80FFFFFF"
+                    app:gaugeStrokeWidth="10dp"
+                    app:gaugeSweepAngle="300"
+                    />
+
+                <TextView
+                    android:id="@+id/text3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFF"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingTop="100dp"
+                    android:text="@string/med_2"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFF"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/peso"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:textColor="#00FFFFFF"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimaryDark"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:text="@string/card_3"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    />
+
+            </LinearLayout>
+
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="36dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="24dp"
+            app:cardElevation="8dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/firebas_orange"
+                android:layout_marginBottom="32dp"
+                >
+
+                <pl.pawelkleczkowski.customgauge.CustomGauge
+                    android:id="@+id/gauge4"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    app:gaugeEndValue="14"
+                    app:gaugePointEndColor="#FFF"
+                    app:gaugePointStartColor="#FFF"
+                    app:gaugeStartAngle="120"
+                    app:gaugeStartValue="0"
+                    app:gaugeStrokeCap="BUTT"
+                    app:gaugeStrokeColor="#80FFFFFF"
+                    app:gaugeStrokeWidth="10dp"
+                    app:gaugeSweepAngle="300"
+                    />
+
+                <TextView
+                    android:id="@+id/text4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFF"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingTop="100dp"
+                    android:text="@string/med_3"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFF"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/peso"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:textColor="#00FFFFFF"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/card_orange"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:text="@string/card_4"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    />
+
+            </LinearLayout>
+
+
+
+        </android.support.v7.widget.CardView>
+
+    </GridLayout>
+
+    <!--<FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <android.support.design.widget.BottomNavigationView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/colorPrimaryDark"
+        app:itemIconTint="#FFF"
+        app:itemTextColor="#FFF"
+        app:menu="@menu/navigation" />
+
+    </FrameLayout>-->
+
+</LinearLayout>

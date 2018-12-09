@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1e88e5</color>
+    <color name="colorPrimaryDark">#0D3C65</color>
+    <color name="colorAccent">#1e88e5</color>
+    <color name="secondcolorAccent">#f68511</color>
+    <color name="bg_dark">#2D2F31</color>
+    <color name="card_orange">#DF5304</color>
+    <color name="card_blue">#1662A5</color>
+    <color name="firebase_blue">#1e88e5</color>
+    <color name="firebas_orange">#f68511</color>
+</resources>

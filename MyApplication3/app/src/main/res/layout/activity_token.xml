@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Token"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    >
+
+    <ImageView
+        android:id="@+id/token_return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        android:layout_marginTop="12sp"
+        android:layout_marginStart="12sp"
+        android:onClick="OnClick"
+        android:clickable="true"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="48dp"
+        android:paddingEnd="48dp"
+        android:layout_centerInParent="true"
+        >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="90sp"
+            app:srcCompat="@drawable/e9_fb_logo"
+            />
+
+        <EditText
+            android:id="@+id/editText4"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="48sp"
+            android:layout_gravity="center"
+            android:backgroundTint="#FFF"
+            />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="140sp"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:layout_gravity="center"
+            android:layout_marginTop="24sp"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

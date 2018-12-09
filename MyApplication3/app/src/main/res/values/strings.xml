@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">E9 Smart House</string>
+    <string name="card_1">Temperatura</string>
+    <string name="card_2">Umidade do Solo</string>
+    <string name="card_3">Umidade do Ar</string>
+    <string name="card_4">Ultravioleta</string>
+    <string name="peso">A</string>
+    <string name="med_1">ºC</string>
+    <string name="med_2">%</string>
+    <string name="med_3">IUV</string>
+</resources>
