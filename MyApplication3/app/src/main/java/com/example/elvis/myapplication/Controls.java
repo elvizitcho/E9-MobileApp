@@ -3,8 +3,10 @@ package com.example.elvis.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,12 +21,38 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
-public class Controls extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-    private ArrayList<String> data = new ArrayList<>();
+public class Controls extends AppCompatActivity{
+
+    private ArrayList<String> lista = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +63,37 @@ public class Controls extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ListView lv = findViewById(R.id.listview);
-        generateListContent();
-        lv.setAdapter(new MyListAdapter(this, R.layout.list_item, data));
+
+        /*Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://127.0.0.1/webservice/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        WebService ws = retrofit.create(WebService.class);
+
+
+
+        Call<List<Dispositivo>> dispLista = ws.getDispositivos("{\"permissao\": \"default\"}");
+        dispLista.enqueue(new Callback<List<Dispositivo>>() {
+            @Override
+            public void onResponse(Call<List<Dispositivo>> call, Response<List<Dispositivo>> response) {
+                for(Dispositivo disp: response.body()){
+                    String comodo = disp.getComodo_nome();
+                    String dispo = disp.getNome();
+                    lista.add(comodo + " - " + dispo);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Dispositivo>> call, Throwable t) {
+                lista.add("erro");
+            }
+        });*/
+
+        post();
+        //generateListContent();
+
+        lv.setAdapter(new MyListAdapter(this, R.layout.list_item, lista));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -53,30 +110,28 @@ public class Controls extends AppCompatActivity {
     }
 
     private void generateListContent() {
-        data.add("Sala A");
-        data.add("Sala B");
-        data.add("Banheiro A");
-        data.add("Banheiro B");
-        data.add("Quarto A");
-        data.add("Quarto B");
-        data.add("Escritório");
-        data.add("Corredor");
-        data.add("Garagem");
-        data.add("Churrasco");
-        data.add("Trigger");
-        data.add("Echo");
-        data.add("Dht22");
-        data.add("Infravermelho");
-        data.add("Chuva");
-        data.add("LDR");
-        data.add("Umidade do Solo");
-        data.add("Ultravioleta");
-        data.add("Sensor Chamas");
-        data.add("RGB Vermelho");
-        data.add("RGB Verde");
-        data.add("RGB Azul");
-        data.add("Postes");
-        data.add("Garagem");
+        lista.add("Sala");
+        lista.add("Banheiro");
+        //lista.add("Banheiro B");
+        lista.add("Quarto");
+        //lista.add("Quarto B");
+        lista.add("Escritório");
+        lista.add("Corredor");
+        lista.add("Garagem");
+        lista.add("Churrasco");
+        /*lista.add("Trigger");
+        lista.add("Echo");
+        lista.add("Dht22");
+        lista.add("Infravermelho");
+        lista.add("Chuva");
+        lista.add("LDR");
+        lista.add("Umidade do Solo");
+        lista.add("Ultravioleta");
+        lista.add("Sensor Chamas");*/
+        lista.add("RGB Vermelho");
+        lista.add("RGB Verde");
+        lista.add("RGB Azul");
+        lista.add("Postes");
     }
 
     @Override
@@ -88,13 +143,17 @@ public class Controls extends AppCompatActivity {
                 startActivity(senIntent);
                 return true;
             case R.id.navigation_eletros:
-                Toast.makeText(Controls.this, "opção redundante", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Controls.this, "Lista Atualizada", Toast.LENGTH_SHORT).show();
+                Intent conIntent = new Intent(this, Controls.class);
+                startActivity(conIntent);
                 return true;
-            case R.id.about:
+            /*case R.id.about:
                 Toast.makeText(Controls.this, "vai par activity SOBRE", Toast.LENGTH_SHORT).show();
-                return true;
+                return true;*/
             case R.id.logout:
-                Toast.makeText(Controls.this, "função para deslogar e retorna para LOGIN", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Controls.this, "Saindo...", Toast.LENGTH_SHORT).show();
+                Intent outIntent = new Intent(this, Login.class);
+                startActivity(outIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -183,5 +242,57 @@ public class Controls extends AppCompatActivity {
     public class ViewHolder {
         TextView title;
         Switch switcher;
+    }
+
+    public void post(){
+        String url = "http://127.0.0.1/webservice/dispositivo/list";
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        /*JSONArray jsonArray = null;
+                        try {
+                            jsonArray = new JSONArray(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+
+                            JSONObject total = jsonArray.getJSONObject(0);
+                            JSONArray dados = total.getJSONArray("dados");
+
+                            for (int i = 0; i < dados.length(); i++) {
+                                JSONObject dispositivo = jsonArray.getJSONObject(i);
+                                String comodo = dispositivo.getString("comodo_nome");
+                                String nome = dispositivo.getString("nome");
+                                lista.add(comodo + "-" + nome);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Log.d("Response", response);*/
+                        Toast.makeText(Controls.this, response, Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> params = new HashMap<>();
+                params.put("permissao", "default");
+
+                return params;
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(postRequest);
     }
 }

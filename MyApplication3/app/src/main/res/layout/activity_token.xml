@@ -46,6 +46,7 @@
             android:layout_marginTop="48sp"
             android:layout_gravity="center"
             android:backgroundTint="#FFF"
+            android:textColor="#FFF"
             />
 
         <Button

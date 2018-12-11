@@ -27,25 +27,27 @@
             />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/login"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:layout_marginTop="48dp"
             android:layout_gravity="center"
             android:backgroundTint="#FFF"
+            android:textColor="#FFF"
 
             />
 
         <EditText
-            android:id="@+id/editText5"
+            android:id="@+id/senha"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"
             android:layout_gravity="center"
             android:backgroundTint="#FFF"
+            android:textColor="#FFF"
             />
 
         <Button
