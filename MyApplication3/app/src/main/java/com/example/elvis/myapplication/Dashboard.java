@@ -39,7 +39,7 @@ public class Dashboard extends AppCompatActivity {
         gauge1.setValue(r1.nextInt(100));
         gauge2.setValue(r2.nextInt(100));
         gauge3.setValue(r3.nextInt(100));
-        gauge4.setValue(r4.nextInt(12));
+        gauge4.setValue(r4.nextInt(14));
 
         text1.setText(String.valueOf(gauge1.getValue()));
         text2.setText(String.valueOf(gauge2.getValue()));
@@ -71,9 +71,6 @@ public class Dashboard extends AppCompatActivity {
                 Intent conIntent = new Intent(this, Controls.class);
                 startActivity(conIntent);
                 return true;
-            /*case R.id.about:
-                Toast.makeText(Dashboard.this, "vai par activity SOBRE", Toast.LENGTH_SHORT).show();
-                return true;*/
             case R.id.logout:
                 Toast.makeText(Dashboard.this, "Saindo...", Toast.LENGTH_SHORT).show();
                 Intent outIntent = new Intent(this, Login.class);

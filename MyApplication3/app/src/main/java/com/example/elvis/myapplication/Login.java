@@ -16,7 +16,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,9 +51,6 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, "Há campos em branco", Toast.LENGTH_SHORT).show();
                 } else {
                     post(ipValue);
-                    /*Toast.makeText(Login.this, "Bem vindo", Toast.LENGTH_SHORT).show();
-                    Intent logIntent = new Intent(v.getContext(), Dashboard.class);
-                    startActivity(logIntent);*/
                 }
             }
         });
@@ -74,7 +70,9 @@ public class Login extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         JSONObject jsonObject = null;
+                        JSONObject jsonObject1 = null;
                         String sucesso = null;
+                        String user = null;
                         try {
                             jsonObject = new JSONObject(response);
                             sucesso = jsonObject.getString("sucesso");
@@ -83,48 +81,21 @@ public class Login extends AppCompatActivity {
                         }
 
                         if(sucesso.matches("true")){
-                            Toast.makeText(Login.this, "Bem vindo", Toast.LENGTH_SHORT).show();
-                            Intent logIntent = new Intent(getApplicationContext(), Dashboard.class);
-                            startActivity(logIntent);
+
+                            try{
+                                user = jsonObject.getString("dados_usuario");
+                                jsonObject1 = new JSONObject(user);
+                                Toast.makeText(Login.this, "Bem vindo, " + jsonObject1.getString("nome") + "!", Toast.LENGTH_SHORT).show();
+                                Intent logIntent = new Intent(getApplicationContext(), Dashboard.class);
+                                startActivity(logIntent);
+                            } catch (JSONException e){
+                                e.printStackTrace();
+                            }
+
                         } else {
                             Toast.makeText(Login.this, "Dados inválidos", Toast.LENGTH_SHORT).show();
                         }
 
-                        /*JSONArray jsonArray = null;
-                        try {
-                            jsonArray = new JSONArray(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        try {
-
-                            JSONObject total = jsonArray.getJSONObject(0);
-                            Boolean sucesso = total.getBoolean("sucesso");
-
-                            if(sucesso==true){
-                                Toast.makeText(Login.this, "Bem vindo", Toast.LENGTH_SHORT).show();
-                                Intent logIntent = new Intent(getApplicationContext(), Dashboard.class);
-                                startActivity(logIntent);
-                            } else {
-                                Toast.makeText(Login.this, "Usuário inválido", Toast.LENGTH_SHORT).show();
-                            }
-
-
-                            /*JSONArray dados = total.getJSONArray("dados");
-
-                            for (int i = 0; i < dados.length(); i++) {
-                                JSONObject dispositivo = jsonArray.getJSONObject(i);
-                                String comodo = dispositivo.getString("comodo_nome");
-                                String nome = dispositivo.getString("nome");
-                                lista.add(comodo + "-" + nome);
-                            }*/
-                        /*} catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        Log.d("Response", response);*/
-                        Toast.makeText(Login.this, response, Toast.LENGTH_SHORT).show();
                     }
                 },
                 new com.android.volley.Response.ErrorListener() {

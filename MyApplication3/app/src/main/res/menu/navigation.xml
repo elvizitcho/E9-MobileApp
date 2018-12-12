@@ -15,12 +15,6 @@
         android:icon="@drawable/ic_tune"
         />
 
-    <!--<item
-        android:id="@+id/about"
-        android:title="Sobre"
-        android:icon="@drawable/ic_tune"
-        />-->
-
     <item
         android:id="@+id/logout"
         android:title="Sair"
