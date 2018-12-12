@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,7 +53,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Controls extends AppCompatActivity{
 
-    private ArrayList<String> lista = new ArrayList<>();
+    //private ArrayList<String> lista1 = new ArrayList<>();
+    private final ArrayList<String> lista = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,73 @@ public class Controls extends AppCompatActivity{
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ListView lv = findViewById(R.id.listview);
+        final ListView lv = findViewById(R.id.listview);
+
+        String ipValue = "127.0.0.1";
+
+            String url = "http://" + ipValue + "/webservice/dispositivo/list";
+            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+
+                    new com.android.volley.Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            JSONObject jsonObject = null;
+                            JSONArray jsonArray;
+                            String dados= null;
+
+                            try {
+                                jsonObject = new JSONObject(response);
+                                dados = jsonObject.getString("dados");
+                                //Toast.makeText(Controls.this, dados, Toast.LENGTH_SHORT).show();
+
+                                try {
+                                    jsonArray = new JSONArray(dados);
+                                    //Toast.makeText(Controls.this, "deu certo", Toast.LENGTH_SHORT).show();
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject dispositivo = jsonArray.getJSONObject(i);
+                                        String comodo = dispositivo.getString("comodo_nome");
+                                        String nome = dispositivo.getString("nome");
+                                        lista.add(comodo + " - " + nome);
+                                        //Toast.makeText(Controls.this, comodo + " - " + nome, Toast.LENGTH_SHORT).show();
+                                    }
+
+                                } catch (JSONException e){
+                                    e.printStackTrace();
+                                }
+
+                            } catch (JSONException e){
+                                e.printStackTrace();
+                            }
+                            //String joined = TextUtils.join(", ", lista2);
+                            //Toast.makeText(Controls.this, joined, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Controls.this, response, Toast.LENGTH_SHORT).show();
+                            //lista1 = lista2;
+                            //Toast.makeText(Controls.this, "deve aparecer por ultimo", Toast.LENGTH_SHORT).show();
+                            //generateListContent();
+
+                            lv.setAdapter(new MyListAdapter(Controls.this, R.layout.list_item, lista));
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Error.Response", error.toString());
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams(){
+                    Map<String, String> params = new HashMap<>();
+                    params.put("permissao", "default");
+                    return params;
+                }
+            };
+            RequestQueue queue = Volley.newRequestQueue(this);
+            queue.add(postRequest);
+            //String joined = TextUtils.join(", ", lista2);
+            //Toast.makeText(Controls.this, joined, Toast.LENGTH_SHORT).show();
+
 
         /*Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://127.0.0.1/webservice/")
@@ -90,16 +158,16 @@ public class Controls extends AppCompatActivity{
             }
         });*/
 
-        post();
-        //generateListContent();
 
-        lv.setAdapter(new MyListAdapter(this, R.layout.list_item, lista));
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //joined = TextUtils.join(", ", lista2);
+        //Toast.makeText(Controls.this, joined, Toast.LENGTH_SHORT).show();
+
+        /*lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Toast.makeText(Controls.this, "List item was clicked at " + position, Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 
     @Override
@@ -244,55 +312,6 @@ public class Controls extends AppCompatActivity{
         Switch switcher;
     }
 
-    public void post(){
-        String url = "http://127.0.0.1/webservice/dispositivo/list";
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
 
-                new com.android.volley.Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        /*JSONArray jsonArray = null;
-                        try {
-                            jsonArray = new JSONArray(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
 
-                        try {
-
-                            JSONObject total = jsonArray.getJSONObject(0);
-                            JSONArray dados = total.getJSONArray("dados");
-
-                            for (int i = 0; i < dados.length(); i++) {
-                                JSONObject dispositivo = jsonArray.getJSONObject(i);
-                                String comodo = dispositivo.getString("comodo_nome");
-                                String nome = dispositivo.getString("nome");
-                                lista.add(comodo + "-" + nome);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        Log.d("Response", response);*/
-                        Toast.makeText(Controls.this, response, Toast.LENGTH_SHORT).show();
-                    }
-                },
-                new com.android.volley.Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.toString());
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams(){
-                Map<String, String> params = new HashMap<>();
-                params.put("permissao", "default");
-
-                return params;
-            }
-        };
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(postRequest);
-    }
 }

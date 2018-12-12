@@ -14,7 +14,7 @@
         android:id="@+id/list_item_text"
         android:textColor="#FFF"
         android:layout_centerVertical="true"
-        android:textSize="24sp"
+        android:textSize="18sp"
         />
 
     <Switch
