@@ -45,16 +45,12 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Controls extends AppCompatActivity{
 
     //private ArrayList<String> lista1 = new ArrayList<>();
-    private final ArrayList<String> lista = new ArrayList<>();
+    final ArrayList<Dispositivo> lista = new ArrayList<>();
+    final String ipValue = "127.0.0.1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +62,7 @@ public class Controls extends AppCompatActivity{
 
         final ListView lv = findViewById(R.id.listview);
 
-        String ipValue = "127.0.0.1";
+
 
             String url = "http://" + ipValue + "/webservice/dispositivo/list";
             StringRequest postRequest = new StringRequest(Request.Method.POST, url,
@@ -89,9 +85,11 @@ public class Controls extends AppCompatActivity{
                                     //Toast.makeText(Controls.this, "deu certo", Toast.LENGTH_SHORT).show();
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject dispositivo = jsonArray.getJSONObject(i);
+                                        String id = dispositivo.getString("id");
                                         String comodo = dispositivo.getString("comodo_nome");
                                         String nome = dispositivo.getString("nome");
-                                        lista.add(comodo + " - " + nome);
+                                        String ligado = dispositivo.getString("ligado");
+                                        lista.add(new Dispositivo(id,comodo + " - " + nome,ligado));
                                         //Toast.makeText(Controls.this, comodo + " - " + nome, Toast.LENGTH_SHORT).show();
                                     }
 
@@ -178,7 +176,7 @@ public class Controls extends AppCompatActivity{
     }
 
     private void generateListContent() {
-        lista.add("Sala");
+        /*lista.add("Sala");
         lista.add("Banheiro");
         //lista.add("Banheiro B");
         lista.add("Quarto");
@@ -186,7 +184,7 @@ public class Controls extends AppCompatActivity{
         lista.add("Escritório");
         lista.add("Corredor");
         lista.add("Garagem");
-        lista.add("Churrasco");
+        lista.add("Churrasco");*/
         /*lista.add("Trigger");
         lista.add("Echo");
         lista.add("Dht22");
@@ -196,10 +194,10 @@ public class Controls extends AppCompatActivity{
         lista.add("Umidade do Solo");
         lista.add("Ultravioleta");
         lista.add("Sensor Chamas");*/
-        lista.add("RGB Vermelho");
+        /*lista.add("RGB Vermelho");
         lista.add("RGB Verde");
         lista.add("RGB Azul");
-        lista.add("Postes");
+        lista.add("Postes");*/
     }
 
     @Override
@@ -230,12 +228,12 @@ public class Controls extends AppCompatActivity{
 
     }
 
-    private class MyListAdapter extends ArrayAdapter<String> {
+    private class MyListAdapter extends ArrayAdapter<Dispositivo> {
         private int layout;
-        private List<String> mObjects;
-        private MyListAdapter(Context context, int resource, List<String> objects) {
+        private List<Dispositivo> mObjects;
+        private MyListAdapter(Context context, int resource, List<Dispositivo> objects) {
             super(context, resource, objects);
-            mObjects = objects;
+            mObjects = (ArrayList) objects;
             layout = resource;
         }
 
@@ -244,10 +242,23 @@ public class Controls extends AppCompatActivity{
             ViewHolder holder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layout, parent, false);
+
+            holder.id = convertView.findViewById(R.id.list_item_id);
             holder.title = convertView.findViewById(R.id.list_item_text);
             holder.switcher = convertView.findViewById(R.id.list_item_swt);
+
             convertView.setTag(holder);
+
             holder = (ViewHolder) convertView.getTag();
+
+            Dispositivo item = mObjects.get(position);
+            holder.id.setText(item.getId());
+            holder.title.setText(item.getNome());
+            if(item.getLigado().equals("1")){
+                holder.switcher.setChecked(true);
+            } else if(item.getLigado().equals("0")){
+                holder.switcher.setChecked(false);
+            }
             /*holder.switcher.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -260,9 +271,93 @@ public class Controls extends AppCompatActivity{
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (finalHolder.switcher.isChecked()) {
-                        Toast.makeText(getContext(), "Ligar " + finalHolder.title.getText(), Toast.LENGTH_SHORT).show();
+                        String url = "http://" + ipValue + "/webservice/dispositivo/ligar";
+                        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+
+                                new com.android.volley.Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+
+                                        JSONObject jsonObject = null;
+
+                                        try {
+                                            jsonObject = new JSONObject(response);
+
+                                            if (jsonObject.getString("sucesso").equals("true")){
+                                                Toast.makeText(getContext(), finalHolder.title.getText() + ": Ligado", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getContext(), "Não foi possível ligar", Toast.LENGTH_SHORT).show();
+                                                finalHolder.switcher.setChecked(false);
+                                            }
+
+                                        } catch (JSONException e){
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                },
+                                new com.android.volley.Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.d("Error.Response", error.toString());
+                                    }
+                                }
+                        ) {
+                            @Override
+                            protected Map<String, String> getParams(){
+                                Map<String, String> params = new HashMap<>();
+                                params.put("permissao", "default");
+                                params.put("id",finalHolder.id.getText().toString());
+                                return params;
+                            }
+                        };
+                        RequestQueue queue = Volley.newRequestQueue(Controls.this);
+                        queue.add(postRequest);
+                        //Toast.makeText(getContext(), "Ligar " + finalHolder.title.getText(), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getContext(), "Desligar " + finalHolder.title.getText(), Toast.LENGTH_SHORT).show();
+                        String url = "http://" + ipValue + "/webservice/dispositivo/desligar";
+                        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+
+                                new com.android.volley.Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+
+                                        JSONObject jsonObject = null;
+
+                                        try {
+                                            jsonObject = new JSONObject(response);
+
+                                            if (jsonObject.getString("sucesso").equals("true")){
+                                                Toast.makeText(getContext(), finalHolder.title.getText() + ": Desligado", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getContext(), "Não foi possível desligar", Toast.LENGTH_SHORT).show();
+                                                finalHolder.switcher.setChecked(true);
+                                            }
+
+                                        } catch (JSONException e){
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                },
+                                new com.android.volley.Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.d("Error.Response", error.toString());
+                                    }
+                                }
+                        ) {
+                            @Override
+                            protected Map<String, String> getParams(){
+                                Map<String, String> params = new HashMap<>();
+                                params.put("permissao", "default");
+                                params.put("id",finalHolder.id.getText().toString());
+                                return params;
+                            }
+                        };
+                        RequestQueue queue = Volley.newRequestQueue(Controls.this);
+                        queue.add(postRequest);
+                        //Toast.makeText(getContext(), "Desligar " + finalHolder.title.getText(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -278,7 +373,7 @@ public class Controls extends AppCompatActivity{
                 }
             });
 
-            holder.title.setText(getItem(position));
+            //holder.title.setText(getItem(position));
 
             return convertView;
         }
@@ -308,6 +403,7 @@ public class Controls extends AppCompatActivity{
     }
 
     public class ViewHolder {
+        TextView id;
         TextView title;
         Switch switcher;
     }

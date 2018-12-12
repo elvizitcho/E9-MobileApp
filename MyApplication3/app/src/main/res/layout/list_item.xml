@@ -5,7 +5,19 @@
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
     android:id="@+id/list_item"
+    android:background="@color/bg_dark"
     >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is the ID"
+        android:id="@+id/list_item_id"
+        android:textColor="@color/bg_dark"
+        android:layout_centerVertical="true"
+        android:textSize="12sp"
+        android:layout_above="@id/list_item_text"
+        />
 
     <TextView
         android:layout_width="match_parent"
